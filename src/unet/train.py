@@ -5,6 +5,7 @@ import sys
 
 import numpy as np
 import torch
+torch.cuda.empty_cache()
 import torch.nn as nn
 from torch import optim
 from tqdm import tqdm
@@ -19,6 +20,7 @@ from torch.utils.data import DataLoader, random_split
 dir_img = 'data/imgs/'
 dir_mask = 'data/masks/'
 dir_checkpoint = 'checkpoints/'
+
 
 
 def train_net(net,
@@ -68,6 +70,7 @@ def train_net(net,
             for batch in train_loader:
                 imgs = batch['image']
                 true_masks = batch['mask']
+                print(batch["name"])
                 assert imgs.shape[1] == net.n_channels, \
                     f'Network has been defined with {net.n_channels} input channels, ' \
                     f'but loaded images have {imgs.shape[1]} channels. Please check that ' \
@@ -146,9 +149,16 @@ def get_args():
 
 
 if __name__ == '__main__':
+
+
+    # print( torch.cuda.memory_summary(device=None, abbreviated=False) )
+    # exit()
+
+
     logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
     args = get_args()
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+
     logging.info(f'Using device {device}')
 
     # Change here to adapt to your data

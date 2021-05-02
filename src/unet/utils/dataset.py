@@ -75,7 +75,8 @@ class BasicDataset(Dataset):
 
         return {
             'image': torch.from_numpy(img).type(torch.FloatTensor),
-            'mask': torch.from_numpy(mask).type(torch.FloatTensor)
+            'mask': torch.from_numpy(mask).type(torch.FloatTensor),
+            'name': mask_file[0]
         }
 
 
