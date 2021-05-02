@@ -8,6 +8,17 @@ import logging
 from PIL import Image
 
 
+def one_hot(im, n_classes=10):
+    im = np.reshape(im, (im.shape[1],im.shape[2]))
+    one_hot = np.zeros((n_classes, im.shape[0], im.shape[1], ))
+    for i in range(0,10):
+        one_hot[i,:,:][im == i+1] = 1
+    
+    one_hot = one_hot
+    return one_hot
+
+
+
 class BasicDataset(Dataset):
     def __init__(self, imgs_dir, masks_dir, scale=1, mask_suffix=''):
         self.imgs_dir = imgs_dir
@@ -59,6 +70,8 @@ class BasicDataset(Dataset):
 
         img = self.preprocess(img, self.scale)
         mask = self.preprocess(mask, self.scale)
+
+        # mask = one_hot(mask)
 
         return {
             'image': torch.from_numpy(img).type(torch.FloatTensor),
