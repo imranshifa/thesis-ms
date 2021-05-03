@@ -15,9 +15,11 @@ from unet import UNet
 from torch.utils.tensorboard import SummaryWriter
 from utils.dataset import BasicDataset
 from torch.utils.data import DataLoader, random_split
+import os 
+dir_path = os.path.dirname(os.path.realpath(__file__))
 
-dir_img = './data/imgs/'
-dir_mask = './data/masks/'
+dir_img = dir_path+'/data/imgs/'
+dir_mask = dir_path+'/data/masks/'
 dir_checkpoint = 'checkpoints/'
 
 
